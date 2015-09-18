@@ -1,0 +1,133 @@
+<?php
+
+namespace Admin\Controller;
+
+use Admin\Infra\Controller;
+use Zend\View\Model\ViewModel;
+use Admin\Form\AuthForm;
+use DOMPDFModule\View\Model\PdfModel;
+
+class IndexController extends Controller {
+
+    public function indexAction() {
+        
+        $usuarioLogado = $this->getAuthServico()->getServidorLogado();
+        $usuarioLogado['cargo'] = $this->getCargoRepositorio()->find($usuarioLogado['cargo']);
+        $usuarioLogado['secretaria'] = $this->getSecretariaRepositorio()->find($usuarioLogado['secretaria']);
+        
+        
+        return new ViewModel(array("usuario" => $usuarioLogado));
+    }
+
+    public function loginAction() {
+        $msg = "";
+
+        /** @var HttpRequest $request */
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            $dataPost = $request->getPost();
+            $data = $dataPost->toArray();
+            try {
+                $service = $this->getAuthServico();
+                if ($service->autenticar($data)) {
+                    return $this->redirect()->toUrl('/admin');
+                } else {
+                    $this->flashMessenger()->addErrorMessage(
+                            'Usuário não encontrado!'
+                    );
+                    $msg = "Nome de Usuário ou Senha inválidos!";
+                }
+            } catch (Exception $ex) {
+                $this->flashMessenger()->addErrorMessage(
+                        'Houve um erro ao tentar logar no sistema!'
+                );
+                $msg = "Houve um erro ao tentar logar no sistema!";
+            }
+        }
+
+        $view = new ViewModel(array("message" => $msg));
+        $view->setTerminal(true);
+        return $view;
+    }
+
+    public function logoutAction() {
+        $service = $this->getAuthServico();
+        $service->logout();
+        return $this->redirect()->toUrl('/admin/login');
+    }
+
+    public function faleConoscoAction() {
+        $usuarioLogado = $this->getAuthServico()->getServidorLogado();
+        
+        /** @var HttpRequest $request */
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            $dataPost = $request->getPost();
+            $data = $dataPost->toArray();
+            $this->getMailServico()->faleConosco($data,$usuarioLogado);
+        }
+    }
+    
+    public function cienteAction(){        
+         // ATIVO = 1 ESTÁ ATIVO, ATIVO = 2 ESTÁ INATIVO(desativado)
+        $id = $this->params()->fromRoute('id', 0);
+        $entity = $this->getAtualizacaoDestinoRepositorio()->findOneBy(array('id' => $id));
+
+        if ($entity) {
+
+            $data = array(
+                'id' => $entity->getId(),
+                'ativo' => 2,
+                'dataAlteracao' => new \DateTime("now")
+            );
+            $service = $this->getAtualizacaoDestinoServico();
+            $service->atualizar($data);
+            
+        }
+        
+        header("Location: /admin");
+       	exit();
+        
+    }
+    
+    /**
+     * @return \Dfranquias\Expansao\Domain\Service\AtualizacaoDestinoService
+     */
+    protected function getAtualizacaoDestinoServico() {
+        return $this->getService('atualizacaoDestino_service');
+    }
+    
+    /**
+     * @return \Dfranquias\Expansao\Domain\Service\MailService
+     */
+    protected function getMailServico() {
+        return $this->getService('mail_service');
+    }
+    
+    /**
+     * @return \Doctrine\ORM\EntityRepository
+     */
+    protected function getAtualizacaoDestinoRepositorio()
+    {
+        return $this->getEm()->getRepository('Admin\Domain\Entity\AtualizacaoDestino');
+    }
+    
+    /**
+     * @return \Doctrine\ORM\EntityRepository
+     */
+    protected function getCargoRepositorio()
+    {
+        return $this->getEm()->getRepository('Admin\Domain\Entity\Cargo');
+    }
+    
+    /**
+     * @return \Doctrine\ORM\EntityRepository
+     */
+    protected function getSecretariaRepositorio()
+    {
+        return $this->getEm()->getRepository('Admin\Domain\Entity\Secretaria');
+    }
+
+}

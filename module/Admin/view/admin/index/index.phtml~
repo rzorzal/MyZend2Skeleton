@@ -1,0 +1,409 @@
+<?php
+    
+    $cargoAcesso = $this->usuario['cargo']->getAcesso();
+
+?>
+<link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+<style>
+
+    div.box.col-md-3{
+        padding: 5px;
+        margin-bottom: 4px;
+        margin-right: 4px;
+        border: 5px solid transparent;
+        border-radius: 7px;
+        background-color: #fafbfc;
+        color: #4C8DB0;
+    }
+
+    div.box.col-md-3 h3{
+        font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-weight: 700;
+        text-transform: uppercase;
+        cursor: pointer;
+    }
+
+    div.box.col-md-3 h3:hover{
+        color: black;
+        animation: pulsar 1.5s infinite;
+        -webkit-animation: pulsar 1.5s infinite;
+    }
+
+    @keyframes pulsar{
+        0%{transform: scale(1.0);}
+        25%{transform: scale(1.04);}
+        50%{transform: scale(1.0);}
+        75%{transform: scale(1.04);}
+        100%{transform: scale(1.0);}
+    }
+
+    @-webkit-keyframes pulsar{
+        0%{-webkit-transform: scale(1.0);}
+        25%{-webkit-transform: scale(1.04);}
+        50%{-webkit-transform: scale(1.0);}
+        75%{-webkit-transform: scale(1.04);}
+        100%{-webkit-transform: scale(1.0);}
+    }
+
+    .aparecer{
+        animation: praFrente 2s 1;
+        -webkit-animation: praFrente 2s 1;
+    }
+
+    @keyframes praFrente{
+        from{transform: scale(1.0);}
+        to{transform: scale(1.6);}
+    }
+
+    @-webkit-keyframes praFrente{
+        from{-webkit-transform: scale(1.0);}
+        to{-webkit-transform: scale(1.6);}
+    }
+
+    .voltar{
+        animation: volta 0.5s 1;
+        -webkit-animation: volta 0.5s 1;
+    }
+
+    @keyframes volta{
+        from{transform: scale(1.4);}
+        to{transform: scale(1.0);}
+    }
+
+    @-webkit-keyframes volta{
+        from{-webkit-transform: scale(1.4);}
+        to{-webkit-transform: scale(1.0);}
+    }
+
+
+    div.innerBox.col-md-12{
+        margin-top: 2px;
+        padding: 3px 5px;
+        font-size: 16px;
+        font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    }
+
+    .clearfix,h2{
+        font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    }
+
+    .clickable{
+        cursor: pointer;
+    }
+
+</style>
+
+<h1 class="page-header">Gestor Compartilhado de Demandas</h1>
+
+<div class="col-md-12" id="final" >
+
+    <div class="panel-body <?=(equals($cargoAcesso,"ilimitado") || equals($cargoAcesso,"geral"))?"enter":""?>" <?=(equals($cargoAcesso,"ilimitado") || equals($cargoAcesso,"geral"))?"data-target='1'":''?> >
+
+        <div class="panel panel-info" >
+            <div class="panel-heading">
+                <i class="fa fa-info-circle"></i> Demonstrativo
+            </div>
+
+            <div class="panel-body">
+                <center>
+                    <div class="col-lg-3 col-md-3 clickable">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-comment-o fa-4x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge" id="quantAberta">0</div>
+                                        <div style="font-size: 12px;">Abertas</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 clickable">
+                        <div class="panel panel-red">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-exclamation-circle fa-4x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge" id="quantEm-Atraso">0</div>
+                                        <div style="font-size: 12px;">Em Atraso</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 clickable">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-comments-o fa-4x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge" id="quantRespondida">0</div>
+                                        <div style="font-size: 12px;" >Respondidas</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 clickable">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-check-circle fa-4x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge" id="quantConcluída">0</div>
+                                        <div style="font-size: 12px;" >Fechadas</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </center>
+            </div>
+        </div>	
+    </div>
+
+    <div class="col-md-12" >
+        <div class="chat-panel panel panel-info" >
+            <div class="panel-heading" >
+                <i class="fa fa-info-circle fa-fw"></i>
+                Atualizações
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <ul class="chat" id="atualizacoes">
+
+
+
+
+                </ul>
+            </div>
+        </div>
+    </div>  
+
+</div>
+
+<div class="panel-body col-md-12" id="secretaria" style="display: none;">
+
+</div>
+
+<div class="panel-body col-md-12" id="setor" style="display: none;">
+
+    
+
+</div>
+
+<input type="hidden" id="view" value="final">
+<input type="hidden" id="secretariaEspecifica" value="">
+
+<div class="col-md-2" style=" display: none; margin-bottom: 6px;" id="backButton">
+    <button id="" type="button" class="btn btn-outline btn-warning">Voltar</button>
+</div>
+
+<script>
+    
+    <?php if(equals($cargoAcesso, "ilimitado")){ ?>
+    
+    pilha = ['final', 'secretaria', 'setor'];
+    title = "";
+    
+    <?php } elseif(equals($cargoAcesso, "geral")){ ?>
+    
+    pilha = ['final', 'setor'];
+    title = "<?=$this->usuario['secretaria']->getNome()?>";
+    $("#secretariaEspecifica").val(<?=$this->usuario['secretaria']->getId() ?>);
+    
+    <?php } else { ?>
+    
+    pilha = ['final'];
+    title = "";
+    
+    <?php  } ?>
+    
+
+    $(document).on("click", ".enter", function (e) {
+        e.preventDefault();
+        var numTarget = $(this).attr("data-target");
+        var target = pilha[numTarget];
+        if (numTarget == 1) {
+            $("#backButton").slideToggle("fast");
+        }
+        
+        <?php if(equals($cargoAcesso, "ilimitado")){ ?>
+        
+        title = $(this).find("h3").html();
+        $("#secretariaEspecifica").val($(this).attr("data-referer"));
+        
+        <?php } ?>
+            
+            
+        atualizaView();
+        
+        $(this).parent().addClass("aparecer");
+        $(this).parent().fadeToggle("slow", function () {
+            $("#" + target).fadeToggle("slow");
+            $("#view").val(target);
+            $(this).removeClass("aparecer");
+        });
+         
+
+    });
+
+    $("#backButton").on("click", function (e) {
+        e.preventDefault();
+        $("#secretariaEspecifica").val(""); 
+        var view = $("#view").val();
+        var i;
+
+        for (i = 0; i < pilha.length; i++) {
+            if (pilha[i] === view) {
+                break;
+            }
+        }
+
+        var novoView = i - 1;
+
+        if (novoView < 0) {
+            novoView = 0;
+        }
+
+        if (novoView === 0) {
+            $("#backButton").slideToggle("fast");
+        }
+
+        $("#" + pilha[i]).fadeToggle("slow", function () {
+            $("#" + pilha[i - 1]).addClass("voltar");
+            $("#" + pilha[i - 1]).fadeToggle("slow", function () {
+                $(this).removeClass("voltar");
+            });
+            $("#view").val(pilha[i - 1]);
+            
+        });
+
+
+    });
+
+</script>
+
+<script>
+
+    function atualizaView() {
+        $.post("/ajax/get-info-index", {view: $("#view").val(), secretaria: $("#secretariaEspecifica").val()}, function (data) {
+            var obj = JSON.parse(data);
+            var view = $("#view").val();
+             //console.log(obj);
+            
+            var iterador;
+            for (iterador in obj['final']) {
+                $("#quant" + iterador.replace(" ", "-")).html(obj['final'][iterador]);
+            }
+            $("#atualizacoes").html("");
+            var atts = "";
+            for (iterador in obj['atualizacoes']){
+                var o = obj['atualizacoes'][iterador];
+                $("#atualizacoes").prepend( "<li class='left clearfix'>" +
+                        "<span class='chat-img pull-left'>" +
+                            "<a href='/requisicao/ver/id/"+ o['requisicao']['id'] +"'>" +
+                                "<button type='button' class='btn btn-" + o['cor'] + " btn-circle btn-lg'><i class='fa fa-"+ o['icone'] + "'></i>" +
+                                "</button>" +
+                            "</a>" +
+                        "</span>" +
+                        "<div class='chat-body clearfix'>" +
+                            "<div class='header'>" +
+                                o['titulo'] +
+                                " - \n<a href='/admin/ciente/id/"+ iterador +"'>Ciente</a>"+
+                            "</div>" +
+                            "<p>" +
+                                o['descricao'] +
+                            "</p>" +
+                        "</div>" +
+                    "</li>");
+
+            }
+
+            var i;
+            for (i = 0; i < pilha.length; i++) {
+                if (pilha[i] === view) {
+                    break;
+                }
+            }
+
+            if (view !== "final") {
+
+                var divs = "";
+                for (iterador in obj[view]) {
+
+                    var o = obj[view][iterador];
+                    var div = "<div class='col-md-3 box ";
+                    
+                    if(view === "secretaria"){
+                        div += " enter "; 
+                    }
+                    
+                    div += " clickable' style=' min-height: 200px; border-color: #4C8DB0;'";
+                    
+                    if(view === 'secretaria'){
+                        div += "data-target='2' data-referer='"+ o['id'] +"'"; 
+                    }
+                    
+                    div += ">" +
+                            "<h3 style='color: #4C8DB0' align='center' >" + iterador + "</h3>" +
+                            "<div class='col-md-12 innerBox' >" +
+                            "<i class='fa fa-comment-o'></i>&nbsp; " +
+                            "Abertas: " + o['Aberta'] +
+                            "</div>" +
+                            "<div class='col-md-12 innerBox' >" +
+                            "<i class='fa fa-comments-o'></i>&nbsp;" +
+                            "Respondidas: " + o['Respondida'] +
+                            "</div>" +
+                            "<div class='col-md-12 innerBox' >" +
+                            "<i class='fa fa-exclamation-circle'></i>&nbsp; " +
+                            "Em Atraso: " + o['Em Atraso'] +
+                            "</div>" +
+                            "<div class='col-md-12 innerBox' >" +
+                            "<i class='fa fa-check-circle'></i>&nbsp; " +
+                            "Fechadas: " + o['Concluída'] +
+                            "</div>" +
+                            "</div>";
+
+                    if (view === "setor") {
+                        if(o['id'] == 0){
+                            divs += "<a href='/requisicao?f=minhas'>" + div + "</a>";
+                        } else {
+                            divs += "<a href='/requisicao?f=setor-" + o['id'] + "'>" + div + "</a>";
+                        }
+                    } else {
+                        divs += div;
+                    }
+                }
+                
+                if(view === "setor"){
+                    divs = "<div class='col-md-12'><h2 align='center' id='setorSecretariaNome'>"+ title +"</h2></div>" + divs;
+                }
+                
+                $("#" + view).html(divs);
+            }
+        });
+    }
+
+
+    $(document).ready(function () {
+
+        atualizaView();
+
+        setInterval(function () {
+
+            atualizaView();
+
+        }, 701  );
+
+    });
+</script>

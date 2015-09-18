@@ -1,0 +1,15 @@
+
+<?php //HERE HAS CSS SCRIPTS THAT SHOULT BE LOADED ON PDF STYLE ?>
+<style>
+<?= file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/bower_components/bootstrap/dist/css/bootstrap.min.css") ?>
+<?= file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/bower_components/bootstrap/dist/metisMenu.min.cs") ?>
+<?= file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css") ?>
+<?= file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/bower_components/datatables-responsive/css/dataTables.responsive.css") ?>
+.icone-azul{color:#264CA3}.icone-azul-secundario{color:#1A6FC9}.icone-vermelho{color:#BF2E38}.icone-vermelho-secundario{color:#AB091E}.icone-verde{color:#03A33B}.icone-verde-secundario{color:#02732A}.icone-laranja{color:#BF5B04}.icone-laranja-secundario{color:#E07212}.icone-amarelo{color:#FFD330}.icone-amarelo-secundario{color:#FFD020}
+<?= file_get_contents($_SERVER['DOCUMENT_ROOT'] . 'dist/css/sb-admin-2.css') ?>
+<?= file_get_contents($_SERVER['DOCUMENT_ROOT'] . 'dist/css/timeline.css') ?>
+<?= file_get_contents($_SERVER['DOCUMENT_ROOT'] . 'dist/css/tooltipster.css') ?>
+<?= file_get_contents($_SERVER['DOCUMENT_ROOT'] . 'bower_components/bootstrap/dist/css/bootstrap.css') ?>
+<?= file_get_contents($_SERVER['DOCUMENT_ROOT'] . 'bower_components/bootstrap/dist/css/bootstrap-theme.css') ?>
+<?= file_get_contents($_SERVER['DOCUMENT_ROOT'] . 'bower_components/bootstrap-social/bootstrap-social.css') ?>
+</style>
